@@ -28,9 +28,9 @@ function [ ret ] = harris( IM, sigma )
         end,
     end
     
-    Hmin = min(min(H));
-    Hmax = max(max(H));
-    Hnorm = (H - Hmin)/(Hmax - Hmin)
+    Hmin = min(min(H))
+    Hmax = max(max(H))
+    Hnorm = (H - Hmin)/(Hmax - Hmin);
     ret = Hnorm;
 end
 
