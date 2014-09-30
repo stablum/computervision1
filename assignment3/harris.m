@@ -1,8 +1,7 @@
-function [ ret ] = harris( IM, sigma )
+function [ Hnorm,Ix,Iy ] = harris( IM, sigma )
     size(IM)
     G = gaussian(1);
     Gd = gaussianDerVec(G, sigma);
-    size(Gd)
     Ix = conv2(IM, Gd,'same');
     Ix2 = Ix .* Ix;
     tmp = conv2(Ix2,G,'same');
@@ -31,6 +30,5 @@ function [ ret ] = harris( IM, sigma )
     Hmin = min(min(H))
     Hmax = max(max(H))
     Hnorm = (H - Hmin)/(Hmax - Hmin);
-    ret = Hnorm;
 end
 
