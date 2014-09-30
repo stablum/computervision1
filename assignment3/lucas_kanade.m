@@ -21,8 +21,8 @@ function [ v ] = lucas_kanade( Ix, Iy, It, center_x, center_y, window_size)
             if y < 1
                 y = 1;
             end
-            if y > size(Ix,2)
-                y = size(Ix,2);
+            if y > size(Iy,1)
+                y = size(Iy,1);
             end
             
             A = [A; Ix(y,x) Iy(y,x)];

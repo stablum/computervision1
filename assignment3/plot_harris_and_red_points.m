@@ -1,5 +1,5 @@
 function plot_harris_and_red_points(H, coordinates )
-    imshow(H);
+    imshow(H*20);
     hold on
     for i = 1:size(coordinates,1),
         x = coordinates(i,1);

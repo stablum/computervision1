@@ -1,7 +1,7 @@
 function lucas_kanade_test(fmt)
     NUMFRAMES = 2;
     WINDOWSIZE = 15;
-    HARRIS_TRESHOLD = 0.1;
+    HARRIS_TRESHOLD = 0.018;
     sigma = 1;
     G = gaussian(sigma);
     Gd = gaussianDerVec(G, sigma);
@@ -18,9 +18,9 @@ function lucas_kanade_test(fmt)
         
         Ix = conv2(IM, Gd,'same');
         Iy = conv2(IM, Gd','same');
-        IMs(:,:,i+1) = IM;
-        Ixs(:,:,i+1) = Ix;
-        Iys(:,:,i+1) = Iy;
+        IMs(:,:,i) = IM;
+        Ixs(:,:,i) = Ix;
+        Iys(:,:,i) = Iy;
     end
     
     xs = 1:size(IMs,2);
@@ -32,7 +32,13 @@ function lucas_kanade_test(fmt)
             Its(y,x,:) = It_curr;
         end
     end
-    
+
+    coord1d = ((1:17)*15)-7;
+    [xs,ys] = meshgrid(coord1d,coord1d);
+    xs = reshape(xs,1,[])
+    ys = reshape(ys,1,[]);
+    coordinates = [xs' ys'];
+
     'now doing the lucas kanade for each frame'
     for i=1:NUMFRAMES
         Ix = Ixs(:,:,i);
@@ -40,18 +46,22 @@ function lucas_kanade_test(fmt)
         It = Its(:,:,i);
         
         % FIXME: Ix and Iy are recomputed
-        [H,Ix2,Iy2] = harris(IM, sigma);
-        coordinates = harris_treshold_coordinates(H,HARRIS_TRESHOLD);
-        
-        for j = 1:size(coordinates,1)
-            x = coordinates(j,1)
-            y = coordinates(j,2)
-            
-            v(i,j,:) = lucas_kanade(Ix,Iy,It,x,y,WINDOWSIZE);
+        %[H,Ix2,Iy2] = harris(IM, sigma);
+        %coordinates = harris_treshold_coordinates(H,HARRIS_TRESHOLD);
+                
+        for j = 1:size(xs,2)
+            x = xs(j);
+            y = ys(j);
+            curr_v = lucas_kanade(Ix,Iy,It,x,y,WINDOWSIZE);
+            v(i,j,:) = curr_v;
         end
     end
-    subplot(2,1,1)
-    plot_harris_and_red_points(H, coordinates )
-    subplot(2,1,2)
-    plot_lucas_kanade_quiver(v,coordinates);
+    for frame_id = 1:NUMFRAMES
+        base_index = (frame_id-1) * 2;
+        subplot(2,2,base_index + 1)
+        imshow(IMs(:,:,frame_id));
+        %plot_harris_and_red_points(H, coordinates )
+        subplot(2,2,base_index + 2)
+        plot_lucas_kanade_quiver(v, frame_id, coordinates);
+    end
 end
