@@ -79,9 +79,9 @@ function tracking_test(fmt,numframes,harris_treshold,windowsize,sigma)
         plot_lucas_kanade_quiver(v, i, [xs' ys']);
         pause(0.1);
 
-        out_filename = sprintf('pingpong_tracked/out_%02d.jpg',i);
-        out_filename
-        print('-djpeg',out_filename);
+        %out_filename = sprintf('pingpong_tracked/out_%02d.jpg',i);
+        %out_filename
+        %print('-djpeg',out_filename);
 
     end
 end
