@@ -1,7 +1,5 @@
-function lucas_kanade_test(fmt)
+function lucas_kanade_test(fmt,windowsize)
     NUMFRAMES = 2;
-    WINDOWSIZE = 15;
-    HARRIS_TRESHOLD = 0.018;
     sigma = 1;
     G = gaussian(sigma);
     Gd = gaussianDerVec(G, sigma);
@@ -52,7 +50,7 @@ function lucas_kanade_test(fmt)
         for j = 1:size(xs,2)
             x = xs(j);
             y = ys(j);
-            curr_v = lucas_kanade(Ix,Iy,It,x,y,WINDOWSIZE);
+            curr_v = lucas_kanade(Ix,Iy,It,x,y,windowsize);
             v(i,j,:) = curr_v;
         end
     end
@@ -64,4 +62,5 @@ function lucas_kanade_test(fmt)
         subplot(2,2,base_index + 2)
         plot_lucas_kanade_quiver(v, frame_id, coordinates);
     end
+    
 end

@@ -1,4 +1,4 @@
-function [ ret ] = harris_test( filename )
+function [ ret ] = harris_test( filename , treshold)
     IM1 = imread(filename);
     if size(size(IM1),2) == 3,
         IM = double(rgb2gray(IM1))/256;
@@ -11,7 +11,7 @@ function [ ret ] = harris_test( filename )
     sigma = 1;
     [H,Ix,Iy] = harris(IM, sigma);
     subplot(2,2,2);
-    coordinates = harris_treshold_coordinates(H,0.2);
+    coordinates = harris_treshold_coordinates(H,treshold);
     plot_harris_and_red_points(H,coordinates);
     ret = 0;
     subplot(2,2,3);

@@ -1,4 +1,4 @@
-function test_tracking(fmt,numframes,harris_treshold,windowsize,sigma)
+function tracking_test(fmt,numframes,harris_treshold,windowsize,sigma)
     G = gaussian(sigma);
     Gd = gaussianDerVec(G, sigma);
 
@@ -78,5 +78,10 @@ function test_tracking(fmt,numframes,harris_treshold,windowsize,sigma)
         subplot(1,2,2)
         plot_lucas_kanade_quiver(v, i, [xs' ys']);
         pause(0.1);
+
+        out_filename = sprintf('pingpong_tracked/out_%02d.jpg',i);
+        out_filename
+        print('-djpeg',out_filename);
+
     end
 end
